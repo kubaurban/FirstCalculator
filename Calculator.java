@@ -43,7 +43,6 @@ public class Calculator {
         System.out.println("Wynik: " + result + "\n");
         clear();
         getValues().add(result);
-        System.out.println("Rozmiar buforu: " + values.size());
     }
 
     public static void main(String[] args) {
