@@ -33,7 +33,12 @@ public class Calculator {
     public void giveValue() {
         System.out.println("Wprowadź wartość");
         Scanner scan = new Scanner(System.in);
-        values.add(scan.nextDouble());
+        try {
+            values.add(scan.nextDouble());
+        } catch (java.util.InputMismatchException e) {
+            System.out.println("Błędna wartość");
+            giveValue();
+        }
     }
     public void getResult(Computation comput){
         Double result = comput.compute(getValue(values.size()-2), getValue(values.size()-1));
@@ -78,7 +83,12 @@ public class Calculator {
                     break;
                 case "/":
                     comput = new Division();
-                    calc.giveValue();
+                    try {
+                        calc.giveValue();
+                    } catch (ArithmeticException e) {
+                        System.out.println("Błąd! Dzielenie przez zero");
+                        calc.giveValue();
+                    }
                     calc.getResult(comput);
                     break;
                 case "M":
@@ -92,8 +102,12 @@ public class Calculator {
                     calc.subM(calc.getLastValue());
                     break;
                 case "sqrt":
-                    System.out.println("Wynik: " + Math.sqrt(calc.getLastValue()));
-                    calc.getValues().add(Math.sqrt(calc.getLastValue()));
+                    if (calc.getLastValue()>=0){
+                        System.out.println("Wynik: " + Math.sqrt(calc.getLastValue()));
+                        calc.getValues().add(Math.sqrt(calc.getLastValue()));
+                    }else{
+                        System.out.println("Błąd! Nieprawidłowe użycie funkcji. Spróbuj ponownie.");
+                    }
                     break;
                 case "CE":
                     calc.getValues().clear();
