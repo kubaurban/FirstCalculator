@@ -15,11 +15,9 @@ public class Calculator {
     public List<Double> getValues() {
         return values;
     }
+    public void clear(){values.clear();}
     public Double getValue(int i) {
         return values.get(i);
-    }
-    public Double getLastValue() {
-        return getValue(values.size() - 1);
     }
     public Double getM() {
         return M;
@@ -41,9 +39,11 @@ public class Calculator {
         }
     }
     public void getResult(Computation comput){
-        Double result = comput.compute(getValue(values.size()-2), getValue(values.size()-1));
+        Double result = comput.compute(getValue(0), getValue(1));
         System.out.println("Wynik: " + result + "\n");
+        clear();
         getValues().add(result);
+        System.out.println("Rozmiar buforu: " + values.size());
     }
 
     public static void main(String[] args) {
@@ -93,24 +93,27 @@ public class Calculator {
                     break;
                 case "M":
                     System.out.println(calc.getM());
+                    calc.clear();
                     calc.getValues().add(calc.getM());
                     break;
                 case "M+":
-                    calc.addM(calc.getLastValue());
+                    calc.addM(calc.getValue(0));
                     break;
                 case "M-":
-                    calc.subM(calc.getLastValue());
+                    calc.subM(calc.getValue(0));
                     break;
                 case "sqrt":
-                    if (calc.getLastValue()>=0){
-                        System.out.println("Wynik: " + Math.sqrt(calc.getLastValue()));
-                        calc.getValues().add(Math.sqrt(calc.getLastValue()));
+                    if (calc.getValue(0)>=0){
+                        double sqrt = Math.sqrt(calc.getValue(0));
+                        System.out.println("Wynik: " + sqrt);
+                        calc.clear();
+                        calc.getValues().add(sqrt);
                     }else{
                         System.out.println("Błąd! Nieprawidłowe użycie funkcji. Spróbuj ponownie.");
                     }
                     break;
                 case "CE":
-                    calc.getValues().clear();
+                    calc.clear();
                     System.out.println("Pamięć usunięta" + "\n");
                     calc.giveValue();
                     break;
