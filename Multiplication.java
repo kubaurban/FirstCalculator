@@ -1,4 +1,4 @@
-package interfaces.project_calculator;
+package project_calculator;
 
 public class Multiplication implements Computation{
     @Override
